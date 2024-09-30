@@ -82,7 +82,7 @@ In config.yaml file, if
 - validate_on_boxes: True
 
 the validation will be performed by looking for the best F1 score, thus considering bounding box labels.
-Bounding boxes should be provided in YOLO format, including class ID in the first column. 
+Bounding boxes should be provided in YOLO format, including class ID in the first column, and into .txt files located in the related folders.
 
 #### Inference
 
@@ -94,16 +94,19 @@ Datasets should be in PascalVOC format, avoiding the 'Main' folder.
 
     ├── Dataset Directory/
     │   └── Devkit/
+    │       ├── BboxAnnotations/
+    │       │   ├── val/
+    │       │   └── test/
     │       ├── NumericAnnotations/
-    │       │   ├── validation.csv/
-    │       │   └── test.csv/
+    │       │   ├── validation.csv
+    │       │   └── test.csv
     │       ├── BinaryAnnotations/
-    │       │   ├── validation.csv/
-    │       │   └── test.csv/
+    │       │   ├── train.csv
+    │       │   └── validation.csv
     │       ├── ImageSets/
     │       │   ├── train.txt/
-    │       │   ├── train.txt/
-    │       │   └── test.txt/
+    │       │   ├── train.txt
+    │       │   └── test.txt
     │       └── JPEGImages/
 
  while .csv files should be in the following format:
