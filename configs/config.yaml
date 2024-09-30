@@ -1,0 +1,50 @@
+#Paths
+data_root: '../../WS'
+log_path: '../../MangoDetNet/runs'
+
+# Train config
+is_train: True # False/True
+strategy: BinaryClassification # Reconstruction/BinaryClassification
+resume_train: False # set as True if you want to continue the training from the last checkpoint
+start_epoch: 0 # Epoch at which training starts. If resume_train is True, it should be set to the epoch that refers to the desired checkpoint
+exp_name: MangoDetNet # Set an experiment name, a new folder will be created into runs
+random_seed: 409
+init_lr: 0.01
+max_epochs: 400
+batch_size: 24
+lr_decay_iters: 10
+lr_step_gamma: 0.5 # multiply by lr_step_gamma every lr_decay_iters iterations
+early_stopping: True
+patience_epochs: 30
+
+# Val and Test config
+validate_on_bboxes: False # valid for local maxima parameters validation and inference results. If False validation is performed using RMSE
+which_epoch: 100 # checkpoint epoch or 'best'
+
+# validation grid search
+min_r: 5
+max_r: 15
+step_r: 1
+min_thp: 5
+max_thp: 40
+step_thp: 1
+
+# test parameters
+r: 38
+thp: 7
+
+save_heatmaps: True #True/False
+# on original samples:
+save_detections: True #True/False
+save_bboxes: True #True/False # Applied only when validate_on_bboxes is True
+
+# Misc
+class_name: ['fruit']
+print_freq: 1
+print_hist_freq: 100
+save_epoch_freq: 20
+val_epoch_freq: 1
+num_workers: 0
+gpu_id: 0
+
+
