@@ -53,6 +53,7 @@ def main():
 
 
     absolute_errors = []
+    flag = False
     for i, data in enumerate(testloader, 0):
         print("-- processing sample: ", i)
 
@@ -98,17 +99,19 @@ def main():
         if not os.path.exists(det_dir):
             os.makedirs(det_dir)
 
+        if config['validate_on_bboxes']:
+            confusion_matrix.process_sample(detections=detection, bboxes=bboxes.squeeze(0)[:, 1:])
+            flag = True
+            
         if config['save_detections']:
             for j in range(len(detection)):
                 img = cv2.circle(img, (int(detection[j, 1]), int(detection[j, 0])), 22, (0, 255, 255), 4)
 
-            if config['validate_on_bboxes']:
-                confusion_matrix.process_sample(detections=detection, bboxes=bboxes.squeeze(0)[:, 1:])
-                if config['save_bboxes']:
-                    bboxes = bboxes.cpu().detach().numpy()[0]
-                    for j in range(len(bboxes)):
-                        img = cv2.rectangle(img, (int(bboxes[j, 1]), int(bboxes[j, 2])),
-                                            (int(bboxes[j, 3]), int(bboxes[j, 4])), (0, 0, 250), 5)
+            if config['save_bboxes'] & flag:
+                bboxes = bboxes.cpu().detach().numpy()[0]
+                for j in range(len(bboxes)):
+                    img = cv2.rectangle(img, (int(bboxes[j, 1]), int(bboxes[j, 2])),
+                                        (int(bboxes[j, 3]), int(bboxes[j, 4])), (0, 0, 250), 5)
 
             cv2.imwrite(det_dir + '/' + img_name[0][:-4] + '_' + str(config['which_epoch']) + '.jpg', img)
 
